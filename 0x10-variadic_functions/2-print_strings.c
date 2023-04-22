@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+
 /**
  * print_strings - Prints strings, followed by a new line.
  * @separator: The string to be printed between strings.
@@ -12,26 +13,30 @@
  */
 void print_strings(const char *separator, const unsigned int n, ...)
 {
-	va_list strings;
-	char *str;
-	unsigned int i;
+	va_list args;
+	unsigned int i = 0;
+	char *string;
 
-	va_start(strings, n);
-
-	for (i = 0; i < n; i++)
+	if (n > 0)
 	{
-		str = va_arg(strings, char *);
+		va_start(args, n);
 
-		if (str == NULL)
-			printf("(nil)");
-		else
-			printf(" %s", str);
+		while (i < n)
+		{
+			string = va_arg(args, char *);
+			if (string == NULL)
+				printf("%s", "(nil)");
+			else
+				printf("%s", string);
 
-		if (i != (n - 1) && separator != NULL)
-			printf(" %s", separator);
+			if (i != n - 1 && separator != NULL)
+				printf("%s", separator);
+
+			i++;
+		}
+
+		va_end(args);
 	}
 
 	printf("\n");
-
-	va_end(strings);
 }
